@@ -1,0 +1,126 @@
+$mainColor: #0062A4;
+$accentColor: #F47E21;
+$lightGray: #e5e5e5;
+$darkGray: #E0E0E0;
+$superLight: #f5f5f5;
+@import "bootstrap-sass-official/assets/stylesheets/bootstrap";
+/*Reset*/
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    padding-top: 10px;
+    padding-bottom: 20px;
+    display: block;
+    font-size: 14px;
+}
+.container-fluid{
+    padding: 0;
+    position: relative;
+}
+.container{
+    margin: 0 auto;
+}
+.header {
+    padding: 0 2% 10px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid $lightGray;
+    .logo {
+        height: 80px;
+        margin: 0;
+        padding: 0;
+        background-image: url("../images/2015-emaint-logo.png");
+        background-repeat: no-repeat;
+        text-indent: -9999px;
+        overflow: hidden;
+    }
+    .area{
+        color: $accentColor;
+        text-align: right;
+        font-size: 1.5em;
+        margin-top: 30px;
+    }
+}
+.loading{
+    padding: 50px 0;
+    text-align: center;
+    width: 100%;
+}
+.eventList{
+    padding-left: 0;
+    padding-right: 0;
+    li{
+        margin-bottom: 2px;
+
+        a{
+            border-radius: 3px;
+            border:1px solid $lightGray;
+            cursor: pointer;
+            display: block;
+            padding: 5px 2%;
+            color: $accentColor;
+
+            &:hover, &.active{
+                color:$superLight;
+                background-color: $accentColor;
+                text-decoration: none;
+            }
+        }
+        .info{
+            display: block;
+            margin-bottom: 2px;
+            &.eventUser{
+                font-size: 1.5em;
+            }
+        }
+    }
+}
+.eventDetails{
+    margin-top: 30px;
+    background-color: $superLight;
+    padding: 15px 10px;
+    .heading{
+        font-size: 2em;
+        margin: 0 0 15px 0;
+        padding: 0;
+        color: $mainColor;
+    }
+    .eventInfo{
+        font-size: 1.25em;
+        padding: 5px 0;
+    }
+    .eventDetailsContainer{
+        border: 1px solid $darkGray;
+        padding: 5px 2%;
+        margin-top: 20px;
+        color: $mainColor;
+    }
+}
+.footer{
+    width: 100%;
+    margin-top: 100px;
+    padding: 10px 0;
+    border-top: 1px solid $lightGray;
+    text-align: center;
+}
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 992px) {
+    .container {
+        max-width: 80%;
+    }
+    /* Remove the padding we set earlier */
+    .header{
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .eventList {
+        padding-right: 20px;
+    }
+    .eventDetails {
+        margin-top: 0;
+        min-height: 360px;
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "emaint",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "^2.2.2",
+    "bootstrap-sass-official": ">=3.3.0"
+  }
+}

@@ -1,5 +1,9 @@
-node_modules/
-bower_components/
+/node_modules/
+/app/bower_components
+.sass-cache/
+.DS_Store
+.editorconfig
+.idea/
 *.log
 
 build/
