@@ -1,31 +1,34 @@
 var React = require('react'),
-    Time = require('react-time');
+    Time = require('react-time'),
+    R = require('ramda');
 
 var EventDetail = React.createClass({
-
-    returnEventDetails: function(obj){
-        var result = [];
-        for (var p in obj) {
-            if( obj.hasOwnProperty(p) ) {
-                if(p.indexOf('Date') > -1){
-                    result.push(
-                        <li className="eventInfo" key={p}>
-                            <strong>{p}:</strong> <Time value={obj[p]} format="YYYY/MM/DD HH:mm" />
-                        </li>
-                    );
-                }else{
-                    result.push(
-                        <li className="eventInfo" key={p}>
-                            <strong>{p}:</strong> {obj[p]}
-                        </li>
-                    );
-                }
-
-            }
-        }
-        return result;
+    detailsList : [],
+    eventDetails : function(k){
+        return this.props.selectedEvent.details[k];
     },
-
+    formatedDateNode:function (k) {
+      return <li className="eventInfo" key={k}>
+                <strong>{k}:</strong> <Time value={this.eventDetails(k)} format="YYYY/MM/DD HH:mm" />
+            </li>
+    },
+    formatedNameNode:function (k) {
+      return <li className="eventInfo" key={k}>
+                 <strong>{k}:</strong> {this.eventDetails(k)}
+             </li>;
+    },
+    checkIfDateOrName: function(key){
+      return ( key.indexOf('Date') !== -1 )
+      ? this.detailsList.push(this.formatedDateNode(key))
+      : this.detailsList.push(this.formatedNameNode(key));
+    },
+    getEventDetails: function (details) {
+      // todo: re implement returnEventDetails in a "functinal" approach
+      // // using ramdajs - http://ramdajs.com/0.21.0/index.html
+      this.detailsList.length = 0;
+      R.forEach(this.checkIfDateOrName, R.keysIn(details))
+      return this.detailsList;
+    },
     render: function() {
         return <section className="eventDetails col-md-8">
             <header>
@@ -38,7 +41,8 @@ var EventDetail = React.createClass({
                 <li className="eventDetailsContainer">
                     <h4>Event Detail</h4>
                     <ul>
-                        {this.returnEventDetails(this.props.selectedEvent.details)}
+                        {this.getEventDetails(this.props.selectedEvent.details)}
+
                     </ul>
                 </li>
             </ul>
