@@ -3,23 +3,27 @@ var React = require('react'),
     R = require('ramda');
 
 var EventDetail = React.createClass({
-    formatNodeValue: function(key){
+
+    formatNodeValue: function(key, value){
       return ( key.indexOf('Date') !== -1 )
-      ? <Time value={ R.prop(key, this.props.selectedEvent.details) } format="YYYY/MM/DD HH:mm" />
-      : R.prop(key, this.props.selectedEvent.details)
+      ? <Time value={ value } format="YYYY/MM/DD HH:mm" />
+      : value
     },
-    formatedNode:function (key) {
+
+    formatedNode:function (arr) {
+      var key   = arr[0],
+          value = arr[1];
       return <li className="eventInfo" key={key}>
-                <strong>{key}:</strong> {this.formatNodeValue(key)}
+                <strong>{key}:</strong> { this.formatNodeValue(key, value) }
             </li>
     },
-   
+
     getEventDetails: function (details) {
       // todo: re implement returnEventDetails in a "functinal" approach
       // // using ramdajs - http://ramdajs.com/0.21.0/index.html
-
-      return R.map(this.formatedNode, R.keys(details)); //{key:value}
+      return R.map(this.formatedNode, R.toPairs(details)); //{key:value} => [key,value]
     },
+
     render: function() {
         return <section className="eventDetails col-md-8">
             <header>
@@ -40,4 +44,5 @@ var EventDetail = React.createClass({
         </section>;
     }
 });
+
 module.exports = EventDetail;
