@@ -3,31 +3,22 @@ var React = require('react'),
     R = require('ramda');
 
 var EventDetail = React.createClass({
-    detailsList : [],
-    eventDetails : function(k){
-        return this.props.selectedEvent.details[k];
+    formatNodeValue: function(key){
+      return ( key.indexOf('Date') !== -1 )
+      ? <Time value={ R.prop(key, this.props.selectedEvent.details) } format="YYYY/MM/DD HH:mm" />
+      : R.prop(key, this.props.selectedEvent.details)
     },
-    formatedDateNode:function (k) {
-      return <li className="eventInfo" key={k}>
-                <strong>{k}:</strong> <Time value={this.eventDetails(k)} format="YYYY/MM/DD HH:mm" />
+    formatedNode:function (key) {
+      return <li className="eventInfo" key={key}>
+                <strong>{key}:</strong> {this.formatNodeValue(key)}
             </li>
     },
-    formatedNameNode:function (k) {
-      return <li className="eventInfo" key={k}>
-                 <strong>{k}:</strong> {this.eventDetails(k)}
-             </li>;
-    },
-    checkIfDateOrName: function(key){
-      return ( key.indexOf('Date') !== -1 )
-      ? this.detailsList.push(this.formatedDateNode(key))
-      : this.detailsList.push(this.formatedNameNode(key));
-    },
+   
     getEventDetails: function (details) {
       // todo: re implement returnEventDetails in a "functinal" approach
       // // using ramdajs - http://ramdajs.com/0.21.0/index.html
-      this.detailsList.length = 0;
-      R.forEach(this.checkIfDateOrName, R.keysIn(details))
-      return this.detailsList;
+
+      return R.map(this.formatedNode, R.keys(details)); //{key:value}
     },
     render: function() {
         return <section className="eventDetails col-md-8">
