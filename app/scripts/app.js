@@ -1,20 +1,25 @@
-var React =  require('react'),
-    ReactDOM = require("react-dom"),
-    EventList = require('./components/eventList'),
-    EventDetail = require('./components/eventDetail'),
-    mountNode = document.getElementById("app");
+import React from 'react';
+import ReactDOM from 'react-dom';
+import EventList from './components/eventList';
+import EventDetail from './components/eventDetail';
 
-var App = React.createClass({
+const mountNode = document.getElementById('app');
 
-    getInitialState: function() {
-        return {
+class App extends React.Component{
+
+    constructor(props){
+        super(props);
+
+        this.state = {
             events: [],
             activeEventIndex: 0,
             selectedEvent: {}
-        }
-    },
+        };
+        
+        this.handleClick = this.handleClick.bind(this);
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         this.endPoint = 'https://api.myjson.com/bins/1jrcc';
         $.get(this.endPoint, function (result) {
             this.setState({
@@ -23,24 +28,24 @@ var App = React.createClass({
                 selectedEvent:result[0]
             });
         }.bind(this));
-    },
+    }
 
-    handleClick: function(event, index){
+    handleClick(event, index){
         this.setState({
            selectedEvent:event,
-            activeEventIndex:index
+           activeEventIndex:index
         });
-    },
+    }   
 
-    render: function() {
-    return <div className="container-fluid">
-        <div className={ 'row ' + (this.state.events.length ? 'show' :'hide') }>
-            <EventList events={this.state.events} activeEventIndex={this.state.activeEventIndex} handleClick={this.handleClick} />
-            <EventDetail selectedEvent={this.state.selectedEvent} />
-        </div>
-      </div>;
+    render() {
+        return <div className="container-fluid">
+            <div className={ 'row ' + (this.state.events.length ? 'show' :'hide') }>
+                <EventList events={this.state.events} activeEventIndex={this.state.activeEventIndex} handleClick={this.handleClick} />
+                <EventDetail selectedEvent={this.state.selectedEvent} />
+            </div>
+          </div>;
     }
-});
+};
 
 
 ReactDOM.render(<App />, mountNode);
